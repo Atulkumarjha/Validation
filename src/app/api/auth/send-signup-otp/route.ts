@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/mongodb';
 import User from '@/models/User';
 import { ValidationError } from '@/types/global';
+import { getClientIpAddress, getCountryFromIp } from '@/lib/geolocation';
 
 export async function POST(request: NextRequest) {
   try {
@@ -15,6 +16,15 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
+
+    // Get user's IP address and country
+    const ipAddress = getClientIpAddress(request);
+    console.log('User IP Address:', ipAddress);
+    
+    const countryData = await getCountryFromIp(ipAddress);
+    const country = countryData?.country || 'Unknown';
+    
+    console.log('User Country:', country);
 
     // Check if user already exists
     const existingUser = await User.findOne({ phone });
@@ -53,7 +63,9 @@ export async function POST(request: NextRequest) {
       name,
       password,
       otp,
-      otpExpiry: otpExpiry.toISOString()
+      otpExpiry: otpExpiry.toISOString(),
+      country,
+      ipAddress
     };
 
     // In a real application, you would send the OTP via SMS service

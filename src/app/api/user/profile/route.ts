@@ -33,6 +33,7 @@ export async function GET(request: NextRequest) {
           phone: user.phone,
           profileImage: user.profileImage,
           panNumber: user.panNumber,
+          country: user.country,
           isPhoneVerified: user.isPhoneVerified,
           isPanVerified: user.isPanVerified,
           createdAt: user.createdAt,

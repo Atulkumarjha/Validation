@@ -27,6 +27,18 @@ export default function Home() {
           </div>
           <div className="flex flex-col sm:flex-row gap-2 justify-center">
             <Link
+              href="/test-welcome"
+              className="text-sm text-green-500 hover:text-green-600 font-medium"
+            >
+              Test Welcome Page →
+            </Link>
+            <Link
+              href="/welcome"
+              className="text-sm text-green-400 hover:text-green-500 font-medium"
+            >
+              Welcome Page →
+            </Link>
+            <Link
               href="/login"
               className="text-sm text-gray-500 hover:text-gray-600 font-medium"
             >

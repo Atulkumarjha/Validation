@@ -133,9 +133,9 @@ export default function BankAccountPage() {
 
       setIsSuccess(true);
 
-      // Redirect to success page after showing success message
+      // Redirect to welcome page after showing success message
       setTimeout(() => {
-        router.push('/success');
+        router.push('/welcome');
       }, 2000);
 
     } catch (error) {
@@ -157,7 +157,7 @@ export default function BankAccountPage() {
             </div>
             <h1 className="text-2xl font-bold text-gray-900 mb-2">Bank Account Added!</h1>
             <p className="text-gray-600 mb-6">
-              Your bank account details have been successfully saved. Redirecting you to the dashboard...
+              Your bank account details have been successfully saved. Redirecting you to your personalized welcome page...
             </p>
             <div className="animate-spin inline-block w-6 h-6 border-2 border-green-500 border-t-transparent rounded-full"></div>
           </div>

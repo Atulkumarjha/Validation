@@ -7,6 +7,8 @@ export interface IUser extends Document {
   profileImage?: string;
   panNumber?: string;
   panCardImage?: string;
+  country?: string;
+  ipAddress?: string;
   isPhoneVerified: boolean;
   isPanVerified: boolean;
   otpToken?: string;
@@ -48,6 +50,17 @@ const UserSchema = new Schema<IUser>({
     type: String,
     default: null
   },
+  country: {
+    type: String,
+    default: null,
+    trim: true,
+    maxlength: [100, 'Country name cannot exceed 100 characters']
+  },
+  ipAddress: {
+    type: String,
+    default: null,
+    trim: true
+  },
   isPhoneVerified: {
     type: Boolean,
     default: false
@@ -67,7 +80,7 @@ const UserSchema = new Schema<IUser>({
 }, {
   timestamps: true,
   toJSON: {
-    transform: function(doc, ret) {
+    transform: function(doc: IUser, ret: Record<string, unknown>) {
       delete ret.password;
       delete ret.otpToken;
       return ret;

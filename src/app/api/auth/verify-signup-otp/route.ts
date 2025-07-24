@@ -56,11 +56,13 @@ export async function POST(request: NextRequest) {
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    // Create new user
+    // Create new user with country and IP address
     const user = new User({
       name,
       phone,
       password: hashedPassword,
+      country: tempData.country || 'Unknown',
+      ipAddress: tempData.ipAddress || 'Unknown',
       isPhoneVerified: true, // Phone is verified through OTP
       isPanVerified: false
     });
@@ -77,6 +79,7 @@ export async function POST(request: NextRequest) {
           id: savedUser._id,
           name: savedUser.name,
           phone: savedUser.phone,
+          country: savedUser.country,
           isPhoneVerified: savedUser.isPhoneVerified,
           isPanVerified: savedUser.isPanVerified
         }

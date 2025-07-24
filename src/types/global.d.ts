@@ -8,6 +8,8 @@ declare global {
       password: string;
       otp: string;
       otpExpiry: string;
+      country?: string;
+      ipAddress?: string;
     };
   };
 }
@@ -34,4 +36,6 @@ export interface TempSignupData {
   password: string;
   otp: string;
   otpExpiry: string;
+  country?: string;
+  ipAddress?: string;
 }
