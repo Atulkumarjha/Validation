@@ -11,13 +11,27 @@ export default function Home() {
           A beautiful and modern authentication system built with Next.js and Tailwind CSS.
         </p>
         <div className="space-y-4">
-          <Link
-            href="/login"
-            className="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-white bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-200 transform hover:scale-105 shadow-lg"
-          >
-            Go to Login Page
-          </Link>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <Link
+              href="/signup"
+              className="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-white bg-gradient-to-r from-green-500 to-blue-600 rounded-lg hover:from-green-600 hover:to-blue-700 transition-all duration-200 transform hover:scale-105 shadow-lg"
+            >
+              Sign Up
+            </Link>
+            <Link
+              href="/signin"
+              className="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-white bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-200 transform hover:scale-105 shadow-lg"
+            >
+              Sign In
+            </Link>
+          </div>
           <div className="flex flex-col sm:flex-row gap-2 justify-center">
+            <Link
+              href="/login"
+              className="text-sm text-gray-500 hover:text-gray-600 font-medium"
+            >
+              Original Login Page →
+            </Link>
             <Link
               href="/pan-verification"
               className="text-sm text-blue-500 hover:text-blue-600 font-medium"
