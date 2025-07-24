@@ -1,7 +1,13 @@
 'use client';
 
 import Link from 'next/link';
-import { CheckCircleIcon, UserIcon, DocumentTextIcon, ShieldCheckIcon } from '@heroicons/react/24/outline';
+import { 
+  CheckCircleIcon, 
+  UserIcon, 
+  DocumentTextIcon, 
+  ShieldCheckIcon,
+  BuildingLibraryIcon 
+} from '@heroicons/react/24/outline';
 
 export default function SuccessPage() {
   return (
@@ -25,7 +31,7 @@ export default function SuccessPage() {
           {/* Verification Steps Completed */}
           <div className="bg-gray-50 rounded-lg p-6 mb-8">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Verification Steps Completed:</h3>
-            <div className="grid md:grid-cols-3 gap-4">
+            <div className="grid md:grid-cols-4 gap-4">
               <div className="flex items-center space-x-3 text-green-600">
                 <UserIcon className="w-5 h-5" />
                 <span className="text-sm font-medium">Profile Setup</span>
@@ -37,6 +43,10 @@ export default function SuccessPage() {
               <div className="flex items-center space-x-3 text-green-600">
                 <DocumentTextIcon className="w-5 h-5" />
                 <span className="text-sm font-medium">PAN Verification</span>
+              </div>
+              <div className="flex items-center space-x-3 text-green-600">
+                <BuildingLibraryIcon className="w-5 h-5" />
+                <span className="text-sm font-medium">Bank Account</span>
               </div>
             </div>
           </div>

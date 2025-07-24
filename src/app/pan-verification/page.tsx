@@ -98,9 +98,9 @@ export default function PanVerificationPage() {
       // Update localStorage with new user data
       localStorage.setItem('userData', JSON.stringify(data.user));
       
-      // Redirect to success page after a short delay
+      // Redirect to bank account page after a short delay
       setTimeout(() => {
-        router.push('/success');
+        router.push('/bank-account');
       }, 2000);
 
     } catch (error: any) {
@@ -127,9 +127,9 @@ export default function PanVerificationPage() {
             <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-green-500 to-green-600 rounded-full mb-4">
               <CheckCircleIcon className="w-8 h-8 text-white" />
             </div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">Verification Successful!</h1>
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">PAN Verified Successfully!</h1>
             <p className="text-gray-600 mb-6">
-              Your PAN card has been successfully verified. You can now access all features.
+              Your PAN card has been successfully verified. Next, please add your bank account details to complete the setup.
             </p>
             <div className="space-y-3">
               <button
