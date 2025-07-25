@@ -58,8 +58,8 @@ export default function LoginPage() {
   const sendOTP = async () => {
     setIsLoading(true);
     try {
-      // First register the user
-      const registerResponse = await fetch('/api/auth/register', {
+      // Use the new signup OTP endpoint that captures IP and country
+      const otpResponse = await fetch('/api/auth/send-signup-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -68,22 +68,6 @@ export default function LoginPage() {
           password: formData.password,
           profileImage: imagePreview
         })
-      });
-
-      const registerData = await registerResponse.json();
-
-      if (!registerResponse.ok) {
-        // If user already exists, try to send OTP anyway
-        if (registerResponse.status !== 409) {
-          throw new Error(registerData.error || 'Registration failed');
-        }
-      }
-
-      // Send OTP
-      const otpResponse = await fetch('/api/auth/send-otp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ phone: formData.phone })
       });
 
       const otpData = await otpResponse.json();
@@ -96,9 +80,10 @@ export default function LoginPage() {
       startOtpTimer();
       alert(`OTP sent to ${formData.phone}${otpData.otp ? ` (Dev: ${otpData.otp})` : ''}`);
       
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error sending OTP:', error);
-      alert(error.message || 'Failed to send OTP. Please try again.');
+      const errorMessage = error instanceof Error ? error.message : 'Failed to send OTP. Please try again.';
+      alert(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -114,12 +99,15 @@ export default function LoginPage() {
 
     setIsLoading(true);
     try {
-      const response = await fetch('/api/auth/verify-otp', {
+      // Use the new signup verification endpoint that captures IP and country
+      const response = await fetch('/api/auth/verify-signup-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
           phone: formData.phone,
-          otp: otpCode
+          otp: otpCode,
+          name: formData.name,
+          password: formData.password
         })
       });
 
@@ -129,17 +117,18 @@ export default function LoginPage() {
         throw new Error(data.error || 'OTP verification failed');
       }
 
-      alert('Login successful! Welcome ' + data.user.name);
+      alert('Registration successful! Welcome ' + data.user.name);
       
-      // Store user data in localStorage for PAN verification
+      // Store user data in localStorage
       localStorage.setItem('userData', JSON.stringify(data.user));
       
-      // Redirect to PAN verification page
-      router.push('/pan-verification');
+      // Redirect to welcome page instead of PAN verification
+      router.push('/welcome');
       
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error verifying OTP:', error);
-      alert(error.message || 'Invalid OTP. Please try again.');
+      const errorMessage = error instanceof Error ? error.message : 'Invalid OTP. Please try again.';
+      alert(errorMessage);
     } finally {
       setIsLoading(false);
     }
