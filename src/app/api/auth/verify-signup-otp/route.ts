@@ -78,6 +78,14 @@ export async function POST(request: NextRequest) {
 
     const savedUser = await user.save();
 
+    console.log('Saved user:', {
+      id: savedUser._id,
+      name: savedUser.name,
+      phone: savedUser.phone,
+      country: savedUser.country,
+      ipAddress: savedUser.ipAddress
+    });
+
     // Clean up temporary data
     delete globalThis.tempSignupData[phone];
 

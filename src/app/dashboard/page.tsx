@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { UserIcon, PhoneIcon, DocumentTextIcon, CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/outline';
+import { UserIcon, PhoneIcon, DocumentTextIcon, CheckCircleIcon, XCircleIcon, GlobeAltIcon } from '@heroicons/react/24/outline';
+import { getCountryFlag } from '@/lib/geolocation';
 
 interface UserData {
   id: string;
@@ -11,6 +12,8 @@ interface UserData {
   phone: string;
   profileImage?: string;
   panNumber?: string;
+  country?: string;
+  ipAddress?: string;
   isPhoneVerified: boolean;
   isPanVerified: boolean;
   createdAt: string;
@@ -113,6 +116,14 @@ export default function DashboardPage() {
                 {userData.phone}
               </p>
               
+              {userData.country && (
+                <p className="text-gray-600 mb-4 flex items-center justify-center md:justify-start">
+                  <GlobeAltIcon className="w-5 h-5 mr-2" />
+                  <span className="mr-2">{getCountryFlag(userData.country)}</span>
+                  {userData.country}
+                </p>
+              )}
+              
               {userData.panNumber && (
                 <p className="text-gray-600 mb-4 flex items-center justify-center md:justify-start">
                   <DocumentTextIcon className="w-5 h-5 mr-2" />
@@ -129,7 +140,33 @@ export default function DashboardPage() {
         </div>
 
         {/* Verification Status */}
-        <div className="grid md:grid-cols-2 gap-6 mb-8">
+        <div className="grid md:grid-cols-3 gap-6 mb-8">
+          {/* Country Information */}
+          <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold text-gray-900">Location Info</h3>
+              <div className="flex items-center text-blue-600">
+                <GlobeAltIcon className="w-5 h-5 mr-2" />
+                <span className="text-sm font-medium">Detected</span>
+              </div>
+            </div>
+            {userData.country ? (
+              <div className="space-y-2">
+                <div className="flex items-center">
+                  <span className="text-2xl mr-2">{getCountryFlag(userData.country)}</span>
+                  <span className="text-lg font-medium text-gray-900">{userData.country}</span>
+                </div>
+                <p className="text-gray-600 text-sm">
+                  Your location is automatically detected based on your IP address for security purposes.
+                </p>
+              </div>
+            ) : (
+              <p className="text-gray-500 text-sm">
+                Location information not available
+              </p>
+            )}
+          </div>
+
           {/* Phone Verification */}
           <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
             <div className="flex items-center justify-between mb-4">

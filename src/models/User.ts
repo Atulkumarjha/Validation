@@ -88,8 +88,8 @@ const UserSchema = new Schema<IUser>({
   }
 });
 
-// Indexes for better performance
-UserSchema.index({ phone: 1 });
-UserSchema.index({ panNumber: 1 });
+// Indexes for better performance - removed to fix duplicate index warnings
+// UserSchema.index({ phone: 1 });
+// UserSchema.index({ panNumber: 1 });
 
 export default mongoose.models.User || mongoose.model<IUser>('User', UserSchema);

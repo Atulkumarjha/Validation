@@ -49,8 +49,8 @@ export default function SignInPage() {
       // Store user data in localStorage
       localStorage.setItem('userData', JSON.stringify(data.user));
       
-      // Redirect to PAN verification page
-      router.push('/pan-verification');
+      // Redirect to dashboard
+      router.push('/dashboard');
       
     } catch (error: any) {
       console.error('Error signing in:', error);
