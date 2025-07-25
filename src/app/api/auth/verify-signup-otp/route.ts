@@ -26,6 +26,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    console.log('TempData for verification:', tempData);
+
     // Check if OTP has expired
     if (new Date() > new Date(tempData.otpExpiry)) {
       delete globalThis.tempSignupData[phone];
@@ -61,10 +63,17 @@ export async function POST(request: NextRequest) {
       name,
       phone,
       password: hashedPassword,
-      country: tempData.country || 'Unknown',
-      ipAddress: tempData.ipAddress || 'Unknown',
+      country: tempData.country,
+      ipAddress: tempData.ipAddress,
       isPhoneVerified: true, // Phone is verified through OTP
       isPanVerified: false
+    });
+
+    console.log('Creating user with data:', {
+      name,
+      phone,
+      country: tempData.country,
+      ipAddress: tempData.ipAddress
     });
 
     const savedUser = await user.save();
@@ -79,7 +88,8 @@ export async function POST(request: NextRequest) {
           id: savedUser._id,
           name: savedUser.name,
           phone: savedUser.phone,
-          country: savedUser.country,
+          country: savedUser.country || 'Unknown',
+          ipAddress: savedUser.ipAddress || 'Unknown',
           isPhoneVerified: savedUser.isPhoneVerified,
           isPanVerified: savedUser.isPanVerified
         }
