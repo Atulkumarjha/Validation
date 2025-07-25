@@ -26,8 +26,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    console.log('TempData for verification:', tempData);
-
     // Check if OTP has expired
     if (new Date() > new Date(tempData.otpExpiry)) {
       delete globalThis.tempSignupData[phone];
@@ -69,22 +67,7 @@ export async function POST(request: NextRequest) {
       isPanVerified: false
     });
 
-    console.log('Creating user with data:', {
-      name,
-      phone,
-      country: tempData.country,
-      ipAddress: tempData.ipAddress
-    });
-
     const savedUser = await user.save();
-
-    console.log('Saved user:', {
-      id: savedUser._id,
-      name: savedUser.name,
-      phone: savedUser.phone,
-      country: savedUser.country,
-      ipAddress: savedUser.ipAddress
-    });
 
     // Clean up temporary data
     delete globalThis.tempSignupData[phone];

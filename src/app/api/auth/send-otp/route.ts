@@ -37,18 +37,9 @@ export async function POST(request: NextRequest) {
       otpExpiry: otpExpiry
     });
 
-    // In a real application, you would send the OTP via SMS service
-    // For now, we'll log it and return it in the response for testing
-    console.log(`OTP for ${phone}: ${otp}`);
-
-    // TODO: Integrate with SMS service (Twilio, AWS SNS, etc.)
-    // await sendSMS(phone, `Your verification code is: ${otp}`);
-
     return NextResponse.json(
       {
-        message: 'OTP sent successfully',
-        // Remove this in production - only for testing
-        otp: process.env.NODE_ENV === 'development' ? otp : undefined
+        message: 'OTP sent successfully'
       },
       { status: 200 }
     );

@@ -19,12 +19,8 @@ export async function POST(request: NextRequest) {
 
     // Get user's IP address and country
     const ipAddress = getClientIpAddress(request);
-    console.log('User IP Address:', ipAddress);
-    
     const countryData = await getCountryFromIp(ipAddress);
     const country = countryData?.country || 'Unknown';
-    
-    console.log('User Country:', country);
 
     // Check if user already exists
     const existingUser = await User.findOne({ phone });
@@ -42,22 +38,7 @@ export async function POST(request: NextRequest) {
     const otpExpiry = new Date();
     otpExpiry.setMinutes(otpExpiry.getMinutes() + 10);
 
-    // Store temporary data in a simple way (in production, use Redis or similar)
-    // For now, we'll create a temporary user document
-    const tempUser = new User({
-      name,
-      phone,
-      password, // Will be hashed later during registration
-      otpToken: otp,
-      otpExpiry: otpExpiry,
-      isPhoneVerified: false,
-      isPanVerified: false
-    });
-
-    // Don't save yet, just validate
-    await tempUser.validate();
-
-    // Store OTP data temporarily (in production, use Redis)
+    // Store OTP data temporarily
     globalThis.tempSignupData = globalThis.tempSignupData || {};
     globalThis.tempSignupData[phone] = {
       name,
@@ -68,14 +49,9 @@ export async function POST(request: NextRequest) {
       ipAddress
     };
 
-    // In a real application, you would send the OTP via SMS service
-    console.log(`Sign-up OTP for ${phone}: ${otp}`);
-
     return NextResponse.json(
       {
-        message: 'OTP sent successfully',
-        // Remove this in production - only for testing
-        otp: process.env.NODE_ENV === 'development' ? otp : undefined
+        message: 'OTP sent successfully'
       },
       { status: 200 }
     );

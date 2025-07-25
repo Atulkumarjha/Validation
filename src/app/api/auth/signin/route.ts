@@ -49,8 +49,6 @@ export async function POST(request: NextRequest) {
       const countryData = await getCountryFromIp(ipAddress);
       const country = countryData?.country || 'Unknown';
       
-      console.log(`Sign-in - User IP Address: ${ipAddress}, User Country: ${country}`);
-      
       // Update user's IP and country information if they have changed
       let shouldUpdate = false;
       if (user.ipAddress !== ipAddress) {
